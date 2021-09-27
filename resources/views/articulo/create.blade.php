@@ -51,7 +51,7 @@
         @enderror
     </div>
 
-    <div class="mb-3 bg-danger">
+    <div class="mb-3 bg-primary">
         <label for="" class="form-label">Serial</label>
         <input id="serial" name="serial" type="text" class="form-control" tabindex="3">
         
