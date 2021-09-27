@@ -14,20 +14,20 @@ class Articulo extends Model
      
 
 
-    protected $fillable = ['idcategoria','idsector','idsede','nombre','modelo','serial','descripcion'];
+    protected $fillable = ['idcategoria','nombre','modelo','serial','descripcion'];
 
    /* public $incrementing = false;*/
 
     public function categoria(){
         return $this -> belongsTo('App\Models\Categoria'); 
     }
-    public function sector(){
+   /* public function sector(){
         return $this -> belongsTo('App\Models\Sector'); 
     }
 
     public function sede(){
         return $this -> belongsTo('App\Models\Sede'); 
-    }
+    }*/
 
     public function marca(){
         return $this -> belongsTo('App\Models\Marca'); 
@@ -38,5 +38,11 @@ class Articulo extends Model
     public function user(){
         return $this -> belongsTo('App\Models\User'); 
     }
+
+    //Relacion muchos a muchos
+
+   public function set_articulos(){
+        return $this -> belongsToMany('App\Models\SetArticulo'); 
+    } 
 
 }

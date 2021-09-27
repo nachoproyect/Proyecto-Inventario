@@ -3,15 +3,13 @@
 @section('title', 'DGHC')
 
 @section('content_header')
-    <h1>LISTADO DE ARTICULOS</h1>
+    <h1>IMPRESION DE CODIGO</h1>
 @stop
 
 @section('content')
-@can('articulo.create')
-<a href="articulos/create" class="btn btn-primary mb-3">CREAR</a>
-@endcan
-<form action="{{route('articulo.imprimirBarra')}}"method="GET" id="form1"> 
 
+<form action="{{ route('articulo.imprimirBarra')}}" method="GET" id="form1">
+    
 <table id="articulos" class="table table-striped mt-4">
     <thead>
         <tr>
@@ -22,8 +20,6 @@
             <th scope="col">Marca/Modelo</th>
             <th scope="col">Serial</th>
             <th scope="col">Estante</th>
-            <th scope="col">Faja</th>
-            <th scope="col">Precinto</th>
             <th scope="col">Descripcion</th>
             <th scope="col">Estado</th>
             <th scope="col">Fec/Creacion</th>
@@ -45,10 +41,8 @@
             <td>{{$articulo->marca->nombre}}</td>
             <td>{{$articulo->serial}}</td>
             <td>{{$articulo->estante}}</td>
-            <td>{{$articulo->faja}}</td>
-            <td>{{$articulo->precinto}}</td>
             <td>{{$articulo->descripcion}}</td> 
-            <td>{{$articulo->estado}}</td>
+            <td>{{$articulo->estado}}</td> 
             <td>{{$articulo->created_at}}</td>
             <td>{{$articulo->updated_at}}</td>
             <td><center>{{$articulo->categoria->nombre}}  {{$articulo->marca->nombre}}<br>{{$articulo->descripcion}} <br>
@@ -68,34 +62,14 @@
             
                 
 
-            <td>
-                <form action="{{route ('articulos.destroy', $articulo->id)}}" class="formulario-eliminar" method="POST">
-                 @can('articulo.show')
-                   <a href="{{route('articulos.show', $articulo->id)}}" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
-                   @endcan
-                   @can('articulo.edit')
-                   <a href="/articulos/{{$articulo->id}}/edit" class="btn btn-primary" ><i class="far fa-edit"></i></a>
-                   @endcan
-                   @csrf
-                   @method('DELETE')
-                   @can('articulo.destroy')
-                   <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
-                   @endcan
-
-
-                </form>
-            </td>
+            
         </tr>
         @endforeach
-
         <input  type="submit" form="form1" value="Imprimir Seleccion" class="btn btn-success mb-3">
-
-         </form>
-
     </tbody>
 
 </table>
-
+</form>
 
 @stop
 
