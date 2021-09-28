@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Articulo;
 use App\Models\Categoria;
-use App\Models\Sector;
-use App\Models\Sede;
 use App\Models\Marca;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use App\Http\Controllers\BarcodeGeneratorController;
-
+use Illuminate\Support\Collection;
+use PDF;
+use Illuminate\Validation\Rule;
 class ArticuloController extends Controller
 {
     public function __construct(){
@@ -52,13 +52,10 @@ public function generateBarcode(Request $request){
      */
     public function create()
     {
-        $categorias = Categoria::orderBy('nombre')->get();
-        $sectors = Sector::orderBy('nombre')->get();
-        $sedes = Sede::orderBy('nombre')->get();
-        $marcas = Marca::orderBy('nombre')->get();
-        
+        $categorias = Categoria::orderBy('nombre')->get();    
+        $marcas = Marca::orderBy('nombre')->get(); 
 
-        return view('articulo.create', compact('categorias','sectors','sedes','marcas'));
+        return view('articulo.create', compact('categorias','marcas'));
 
         /*$sectors = Sector::orderBy('nombre')->get();
         return view('sector.create', compact('sectors'));
@@ -79,10 +76,14 @@ public function generateBarcode(Request $request){
     {
         $request->validate([
             
-            'ip'=>'unique:articulos,ip|nullable:articulos',
-            'puesto'=>'nullable:articulos',
+           // 'ip'=>'unique:articulos,ip|nullable:articulos',
+           //'puesto'=>'nullable:articulos',
             'serial'=>'nullable:articulos|unique:articulos,serial',
             'estante'=>'nullable:articulos|unique:articulos,estante',
+            'categoria_id'=>'required:articulos',
+            'marca_id'=>'required:articulos',
+            'faja'=>'nullable:articulos|unique:articulos,faja',
+            'precinto'=>'nullable:articulos|unique:articulos,precinto',
 
             
 
@@ -93,16 +94,14 @@ public function generateBarcode(Request $request){
         $articulos = new Articulo();
 
         $articulos->codigo = $id;
-
         $articulos->categoria_id = $request->get('categoria_id');
-        $articulos->sector_id = $request->get('sector_id');
-        $articulos->sede_id = $request->get('sede_id');
-        $articulos->puesto = $request->get('puesto');
-        $articulos->ip = $request->get('ip');
         $articulos->marca_id = $request->get('marca_id');
         $articulos->serial = $request->get('serial');
         $articulos->estante = $request->get('estante');
+        $articulos->faja = $request->get('faja');
+        $articulos->precinto = $request->get('precinto');
         $articulos->descripcion = $request->get('descripcion');
+        $articulos->estado = $request->get('estado');
 
 
         $articulos->save();
@@ -118,13 +117,32 @@ public function generateBarcode(Request $request){
      */
     public function show(Articulo $articulo)
     {
-        $categorias = Categoria::all();
-        $sectors = Sector::all();
-        $sedes = Sede::all();
-        $marcas = Marca::all();
-        //$articulo = Articulo::find($id);
-        return view('articulo.show', compact('articulo', 'categorias','sectors','sedes','marcas'));
+        
+         return view('articulo.show', compact('articulo'));
     }
+
+    public function barra(Request $request)
+    {
+        
+      $articulos = $request->articulos;
+       return view('articulo.barras')->with('articulos', $articulos);
+       
+    }
+
+  public function createPDF(){
+
+        /* $categorias = Categoria::orderBy('nombre')->get();
+         $marcas = Marca::orderBy('nombre')->get();*/
+        //Recuperar todos los productos de la db
+      $articulos = Articulo::all();
+       
+        view()->share('articulos', $articulos);
+       // $articulos = $request->articulos;
+      return $pdf = PDF::loadView('articulo.barras',$articulos);
+       
+       //return $pdf->download('archivo-pdf.pdf');
+    }
+    
 
     /**
      * Show the form for editing the specified resource.
@@ -135,11 +153,11 @@ public function generateBarcode(Request $request){
     public function edit($articulo)
     {
         $categorias = Categoria::all();
-        $sectors = Sector::all();
-        $sedes = Sede::all();
+       // $sectors = Sector::all();
+      //  $sedes = Sede::all();
         $marcas = Marca::all();
         $articulo = Articulo::find($articulo);
-        return view('articulo.edit',compact('articulo','categorias','sectors','sedes','marcas'));
+        return view('articulo.edit',compact('articulo','categorias','marcas'));
     }
 
     /**
@@ -151,34 +169,31 @@ public function generateBarcode(Request $request){
      */
     public function update(Request $request, $id)
     {
-      /*  $request->validate([
+        $request->validate([
             
            
-            'puesto'=>'required:articulos',
-            'serial'=>'required:articulos',
-            'estante'=>'required:articulos',
+            'faja'=>'unique:articulos','faja',
 
-            
+            'precinto'=>'unique:articulos','precinto',
+            'faja' => Rule::unique('articulos')->ignore($articulo->id, 'faja')
 
-        ]);*/
+        ]);
         $articulo = Articulo::find($id);
 
-       // $articulo->codigo = $id;
+       
 
-        $articulo->categoria_id = $request->get('categoria_id');
-        $articulo->sector_id = $request->get('sector_id');
-        $articulo->sede_id = $request->get('sede_id');
-        $articulo->puesto = $request->get('puesto');
-        $articulo->ip = $request->get('ip');
+        $articulo->categoria_id = $request->get('categoria_id');        
         $articulo->marca_id = $request->get('marca_id');
         $articulo->serial = $request->get('serial');
         $articulo->estante = $request->get('estante');
+        $articulo->faja = $request->get('faja');
+        $articulo->precinto = $request->get('precinto');
         $articulo->descripcion = $request->get('descripcion');
-
+        $articulo->estado = $request->get('estado');
 
         $articulo->save();
 
-        return redirect('articulos');
+        return redirect('articulos')->with('actualizar','ok');
     }
 
     /**
@@ -194,5 +209,13 @@ public function generateBarcode(Request $request){
         $articulo->delete();
 
         return redirect('articulos')->with('eliminar','ok');
+    }
+
+    public function impresion()
+    {
+         $articulos = Articulo::all();
+        return view('articulo.impresion')->with('articulos', $articulos);
+        
+         //return view('articulo.impresion', compact('articulo'));
     }
 }

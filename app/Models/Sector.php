@@ -14,6 +14,6 @@ class Sector extends Model
     protected $fillable = ['nombre','descripcion','condicion'];
 
     public function articulo(){
-        return $this -> hasMany('App\Models\Articulo'); 
+        return $this -> hasMany('App\Models\Set_Articulo'); 
     }
 }

@@ -6,14 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Wildside\Userstamps\Userstamps;
 
-class Sede extends Model
+class SetArticulo extends Model
 {
     use HasFactory;
     use Userstamps;
 
-    protected $fillable = ['nombre','descripcion','condicion'];
+    //Relacion muchos a muchos
 
-    public function articulo(){
-        return $this -> hasMany('App\Models\Set_Articulo'); 
-    }
+   public function set_articulos(){
+        return $this -> belongsToMany('App\Models\Articulo');
+}
 }
