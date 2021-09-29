@@ -3,101 +3,31 @@
 @section('title', 'DGHC')
 
 @section('content_header')
-    <h1>LISTADO DE ARTICULOS</h1>
+    <h1>CODIGO DE BARRAS </h1>
 @stop
 
 @section('content')
-@can('articulo.create')
-<a href="articulos/create" class="btn btn-primary mb-3">CREAR</a>
-@endcan
-<form action="{{route('articulo.imprimirBarra')}}"method="GET" id="form1"> 
+<div class="wrapper" style="display: grid; grid-template-columns: auto auto auto; padding: 10px;">
+@foreach ($articulos as $articulo)
+<?php
+    $articuloObj = json_decode($articulo, true);
+    //dd($articuloObj);
+   // die();
+?>
 
-<table id="articulos" class="table table-striped mt-4">
-    <thead>
-        <tr>
-            <th scope="col">ID</th>
-            
-            <th scope="col">Categoria</th>
-            
-            <th scope="col">Marca/Modelo</th>
-            <th scope="col">Serial</th>
-            <th scope="col">Estante</th>
-            <th scope="col">Faja</th>
-            <th scope="col">Precinto</th>
-            <th scope="col">Descripcion</th>
-            <th scope="col">Estado</th>
-            <th scope="col">Fec/Creacion</th>
-            <th scope="col">Fec/Actualizacion</th>
-            <th scope="col">Codigo de Barras</th>
-            <th scope="col">Acciones</th>
-
-        </tr>
+             
+            <div class="container-item" style="border: black 2px solid;  padding: 2px;   border: 1px solid rgba(0, 0, 0, 0.8); padding: 20px; font-size: 30px; width: 300px; height: 160px; text-align: center;">
+                <img src="{{ asset('/img/etiqueta.png') }}" alt="image" height="30px" class="avatar">
+            <h6>{!! $articuloObj["categoria"]["nombre"] !!}
+            {!! $articuloObj["marca"]["nombre"] !!}<br>
+            {!! $articuloObj["descripcion"] !!}<br>
+            {!! DNS1D::getBarcodeSVG($articuloObj["codigo"],'C128C') !!}</h6>
+            </div>
         
-    </thead>
-    <tbody>
-        @foreach ($articulos as $articulo)
-        <tr>
-
-            <td>{{$articulo->id}}</td>
-           
-            <td>{{$articulo->categoria->nombre}}</td>
-            
-            <td>{{$articulo->marca->nombre}}</td>
-            <td>{{$articulo->serial}}</td>
-            <td>{{$articulo->estante}}</td>
-            <td>{{$articulo->faja}}</td>
-            <td>{{$articulo->precinto}}</td>
-            <td>{{$articulo->descripcion}}</td> 
-            <td>{{$articulo->estado}}</td>
-            <td>{{$articulo->created_at}}</td>
-            <td>{{$articulo->updated_at}}</td>
-            <td><center>{{$articulo->categoria->nombre}}  {{$articulo->marca->nombre}}<br>{{$articulo->descripcion}} <br>
-
-                      {!! DNS1D::getBarcodeSVG($articulo->codigo,'C128C') !!}
-                     <div class="checkbox">
-                    <label>
-                        <input type="checkbox" name="articulos[]" value ="{{$articulo}}">
-
-
-                    </label>
-
-                     </div>
-                     </center>
-            </td>
-
-            
-                
-
-            <td>
-                <form action="{{route ('articulos.destroy', $articulo->id)}}" class="formulario-eliminar" method="POST">
-                 @can('articulo.show')
-                   <a href="{{route('articulos.show', $articulo->id)}}" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
-                   @endcan
-                   @can('articulo.edit')
-                   <a href="/articulos/{{$articulo->id}}/edit" class="btn btn-primary" ><i class="far fa-edit"></i></a>
-                   @endcan
-                   @csrf
-                   @method('DELETE')
-                   @can('articulo.destroy')
-                   <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
-                   @endcan
-
-
-                </form>
-            </td>
-        </tr>
         @endforeach
-
-        <input  type="submit" form="form1" value="Imprimir Seleccion" class="btn btn-success mb-3">
-
-         </form>
-
-    </tbody>
-
-</table>
-
-
+        
 @stop
+</div>
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
@@ -144,7 +74,7 @@
     $(document).ready(function() {
     $('#articulos').DataTable({
         responsive: true,
-        "lengthMenu": [[15, 50, -1], [15, 50, "All"]],
+        "lengthMenu": [[10, 50, -1], [10, 50, "All"]],
             dom: "lBfrtip",
             buttons:{
                 dom:{
@@ -180,40 +110,4 @@
 </script>
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
-    
-@if (session('eliminar') == 'ok')
-    <script>
-       Swal.fire(
-      '¡Eliminado!',
-      'El registro se elimino con exito.',
-      'success'
-    ) 
-    </script>
-
-@endif
-
-<script>
-     $('.formulario-eliminar').submit(function(e){
-        e.preventDefault();
-
-        Swal.fire({
-  title: '¿Estas seguro?',
-  text: "¡Este registro se eliminara definitivamente!",
-  icon: 'warning',
-  showCancelButton: true,
-  confirmButtonColor: '#3085d6',
-  cancelButtonColor: '#d33',
-  confirmButtonText: '¡Si, eliminar!',
-  cancelButtonText: 'Cancelar',
-}).then((result) => {
-  if (result.isConfirmed) {
-    
-    this.submit();
-  }
-})
-     });
-
-</script>
 @stop

@@ -1,4 +1,4 @@
-@extends('adminlte::page')
+|@extends('adminlte::page')
 
 @section('title', 'DGHC')
 
@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-    <form action="/articulos/{{$articulo->id}}" method="POST">
+    <form action="/articulos/{{$articulo->id}}" class="formulario-actualizar" method="POST">
     @csrf
     @method('PUT')
     
@@ -23,50 +23,10 @@
             @endforeach
         </select>
     </div>
-    <div class="mb-3">
-        <label for="" class="form-label">Sector</label>
-        <select id="idsector" name="sector_id" class="form-control" tabindex="2">
-            <option value="" selected="disabled">-- Seleccione un Sector --</option>
-            @foreach ($sectors as $sector)
-                <option value="{{$sector->id}}"@if ($sector->id === $articulo->sector_id) selected @endif>{{$sector->nombre}}</option>
-            @endforeach
-        </select>
-    </div>
-    <div class="mb-3">
-        <label for="" class="form-label">Sede</label>
-        <select id="idsede" name="sede_id" class="form-control" tabindex="3">
-            <option value="" selected="disabled">-- Seleccione una Sede --</option>
-            @foreach ($sedes as $sede)
-                <option value="{{$sede->id}}" @if ($sede->id === $articulo->sede_id) selected @endif>{{$sede->nombre}}</option>
-            @endforeach
-        </select>
-    </div>
-    <div class="mb-3">
-        <label for="" class="form-label">Puesto</label>
-        <input id="puesto" name="puesto" type="text" class="form-control" tabindex="4" value="{{$articulo->puesto}}">
-        @error('puesto')
-        <div class="alert alert-danger">
-        
-        <small>*{{$message}}</small>
-        
-        </div>
-        @enderror
-    </div>
-
-    <div class="mb-3">
-        <label for="" class="form-label">IP</label>
-        <input id="ip" name="ip" type="text" class="form-control" tabindex="5" value="{{$articulo->ip}}">
-        @error('ip')
-        <div class="alert alert-danger">
-        
-        <small>*{{$message}}</small>
-        
-        </div>
-        @enderror
-    </div>
+    
     <div class="mb-3">
         <label for="" class="form-label">Marca/Modelo</label>
-        <select id="idmarca" name="marca_id" class="form-control" tabindex="6">
+        <select id="idmarca" name="marca_id" class="form-control" tabindex="2">
             <option value="" selected="disabled">-- Seleccione una Marca --</option>
             @foreach ($marcas as $marca)
                 <option value="{{$marca->id}}" @if ($marca->id === $articulo->marca_id) selected @endif>{{$marca->nombre}}</option>
@@ -76,7 +36,7 @@
 
     <div class="mb-3">
         <label for="" class="form-label">Serial</label>
-        <input id="serial" name="serial" type="text" class="form-control" tabindex="7" value="{{$articulo->serial}}">
+        <input id="serial" name="serial" type="text" class="form-control" tabindex="3" value="{{$articulo->serial}}">
         @error('serial')
         <div class="alert alert-danger">
         
@@ -87,21 +47,41 @@
     </div>
     <div class="mb-3">
         <label for="" class="form-label">Estante</label>
-        <input id="estante" name="estante" type="text" class="form-control" tabindex="8" value="{{$articulo->estante}}">
-        @error('estante')
+        <input id="estante" name="estante" type="text" class="form-control" tabindex="4" value="{{$articulo->estante}}">
+       
+    </div>
+    <div class="mb-3">
+        <label for="" class="form-label">Faja</label>
+        <input id="faja" name="faja" type="text" class="form-control" tabindex="5" value="{{$articulo->faja}}">
+      
+       @error('faja')
         <div class="alert alert-danger">
         
         <small>*{{$message}}</small>
         
         </div>
         @enderror
+        
     </div>
+
+    <div class="mb-3">
+        <label for="" class="form-label">Precinto</label>
+        <input id="precinto" name="precinto" type="text" class="form-control" tabindex="6" value="{{$articulo->precinto}}">
+       
+    </div>
+
     <div class="mb-3">
         <label for="" class="form-label">Descripcion</label>
-        <input id="descripcion" name="descripcion" type="text" class="form-control" tabindex="9" value="{{$articulo->descripcion}}">
+        <input id="descripcion" name="descripcion" type="text" class="form-control" tabindex="7" value="{{$articulo->descripcion}}">
     </div>
-    <a href="/articulos" class="btn btn-secondary" tabindex="10">Cancelar</a>
-    <button type="submit" class="btn btn-primary" tabindex="11">Guardar</button>
+
+    <div class="mb-3">
+        <label for="" class="form-label">Estado</label>
+        <input id="estado" name="estado" type="text" class="form-control" tabindex="8" value="{{$articulo->estado}}">
+    </div>
+
+    <a href="/articulos" class="btn btn-secondary" tabindex="9">Cancelar</a>
+    <button type="submit" class="btn btn-primary" tabindex="10">Guardar</button>
     
 </form>
 @stop
@@ -111,4 +91,41 @@
 @stop
 
 @section('js')
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    
+@if (session('actualizar') == 'ok')
+    <script>
+       Swal.fire(
+      '¡Actualizado!',
+      'El registro se actualizo con exito.',
+      'success'
+    ) 
+    </script>
+
+@endif
+
+<script>
+     $('.formulario-actualizar').submit(function(e){
+        e.preventDefault();
+
+        Swal.fire({
+  title: '¿Estas seguro?',
+  text: "¡Este registro se actualizara definitivamente!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: '¡Si, actualizar!',
+  cancelButtonText: 'Cancelar',
+}).then((result) => {
+  if (result.isConfirmed) {
+    
+    this.submit();
+  }
+})
+     });
+
+</script>
 @stop

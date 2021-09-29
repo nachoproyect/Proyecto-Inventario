@@ -298,7 +298,7 @@ return [
                    ],
                     
                 ],
-                [
+                /*[
                     'text' => 'Sector',
                     'icon' => 'fas fa-align-justify',
                     'url'  => '#',
@@ -340,7 +340,7 @@ return [
                     
                        ],
                    ],
-                ],
+                ],*/
                 [
                     'text' => 'Marca y Modelo',
                     'icon' => 'fas fa-align-justify',
