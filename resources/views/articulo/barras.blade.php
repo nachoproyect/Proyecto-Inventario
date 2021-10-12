@@ -16,7 +16,7 @@
 ?>
 
              
-            <div class="container-item" style="border: black 2px solid;  padding: 2px;   border: 1px solid rgba(0, 0, 0, 0.8); padding: 20px; font-size: 30px; width: 300px; height: 160px; text-align: center;">
+            <div class="container-item" style="border: black 2px solid;  padding: 2px;   border: 1px solid rgba(0, 0, 0, 0.8); padding: 20px; font-size: 30px; width: 300px; height: 150px; text-align: center;">
                 <img src="{{ asset('/img/etiqueta.png') }}" alt="image" height="30px" class="avatar">
             <h6>{!! $articuloObj["categoria"]["nombre"] !!}
             {!! $articuloObj["marca"]["nombre"] !!}<br>
