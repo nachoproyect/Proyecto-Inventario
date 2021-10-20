@@ -69,13 +69,14 @@
                 
 
             <td>
-                <form action="{{route ('articulos.destroy', $articulo->id)}}" class="formulario-eliminar" method="POST">
-                 @can('articulo.show')
+                @can('articulo.show')
                    <a href="{{route('articulos.show', $articulo->id)}}" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
                    @endcan
                    @can('articulo.edit')
                    <a href="/articulos/{{$articulo->id}}/edit" class="btn btn-primary" ><i class="far fa-edit"></i></a>
                    @endcan
+                <form action="{{route ('articulos.destroy', $articulo->id)}}" class="formulario-eliminar" method="POST">
+                 
                    @csrf
                    @method('DELETE')
                    @can('articulo.destroy')
