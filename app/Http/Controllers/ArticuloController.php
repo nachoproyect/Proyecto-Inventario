@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\ArticuloCreateRequest;
+use App\Http\Requests\ArticuloEditRequest;
 use App\Models\Articulo;
 use App\Models\Categoria;
 use App\Models\Marca;
@@ -64,7 +66,6 @@ public function generateBarcode(Request $request){
         return view('sede.create', compact('sedes'));*/
     }
     
-    
 
     /**
      * Store a newly created resource in storage.
@@ -72,22 +73,22 @@ public function generateBarcode(Request $request){
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ArticuloCreateRequest $request)
     {
-        $request->validate([
+       // $request->validate([
             
-           // 'ip'=>'unique:articulos,ip|nullable:articulos',
-           //'puesto'=>'nullable:articulos',
-            'serial'=>'nullable:articulos|unique:articulos,serial',
-            'estante'=>'nullable:articulos|unique:articulos,estante',
-            'categoria_id'=>'required:articulos',
-            'marca_id'=>'required:articulos',
-            'faja'=>'nullable:articulos|unique:articulos,faja',
-            'precinto'=>'nullable:articulos|unique:articulos,precinto',
+            // 'ip'=>'unique:articulos,ip|nullable:articulos',
+            //'puesto'=>'nullable:articulos',
+            //'serial'=>'nullable:articulos|unique:articulos,serial',
+            //'estante'=>'nullable:articulos|unique:articulos,estante',
+            //'categoria_id'=>'required:articulos',
+            //'marca_id'=>'required:articulos',
+            //'faja'=>'nullable:articulos|unique:articulos,faja',
+            //'precinto'=>'nullable:articulos|unique:articulos,precinto',
 
             
 
-        ]);
+     //   ]);
         
         $id = IdGenerator::generate(['table' => 'articulos','field'=>'codigo', 'length' => 8, 'prefix' =>date('1')]);
 
@@ -167,17 +168,17 @@ public function generateBarcode(Request $request){
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ArticuloEditRequest $request, $id)
     {
-        $request->validate([
+      //  $request->validate([
             
            
-            'faja'=>'unique:articulos','faja',
+          //  'faja'=>'unique:articulos','faja',
 
-            'precinto'=>'unique:articulos','precinto',
-            'faja' => Rule::unique('articulos')->ignore($articulo->id, 'faja')
+          //  'precinto'=>'unique:articulos','precinto',
+         
 
-        ]);
+     //   ]);
         $articulo = Articulo::find($id);
 
        
