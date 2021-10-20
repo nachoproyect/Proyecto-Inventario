@@ -23,7 +23,7 @@
     </div>
     <div class="mb-3">
         <label for="" class="form-label">Descripcion</label>
-        <input id="descripcion" name="pc" type="text" class="form-control" tabindex="2" value="{{$categoria->descripcion}}">
+        <input id="descripcion" name="descripcion" type="text" class="form-control" tabindex="2" value="{{$categoria->descripcion}}">
     </div>
     <div class="mb-3">
         <label for="" class="form-label">Condicion</label>
