@@ -18,14 +18,18 @@ class CreateArticulosTable extends Migration
             $table->string('codigo');
             //Campo para conectarse con la tabla categorias
             $table->integer('categoria_id')->unsigned();
-            $table->integer('sector_id')->unsigned();
-            $table->integer('sede_id')->unsigned();
-            $table->string('puesto', 70)->nullable();
-            $table->string('ip', 70)->nullable();
+          //  $table->integer('sector_id')->unsigned();
+           // $table->integer('sede_id')->unsigned();
+            
+            //$table->string('ip', 70)->nullable();
             $table->integer('marca_id')->unsigned();
             $table->string('serial', 70)->nullable();
             $table->string('estante', 70)->nullable();
+            $table->string('faja', 256)->nullable();
+            $table->string('precinto', 256)->nullable();
             $table->string('descripcion', 256)->nullable();
+
+            $table->string('estado', 70)->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
 
@@ -33,8 +37,8 @@ class CreateArticulosTable extends Migration
 
             //Clave foranea
             $table->foreign('categoria_id')->references('id')->on('categorias');
-            $table->foreign('sector_id')->references('id')->on('sectors');
-            $table->foreign('sede_id')->references('id')->on('sedes');   
+         //   $table->foreign('sector_id')->references('id')->on('sectors');
+          //  $table->foreign('sede_id')->references('id')->on('sedes');   
             $table->foreign('marca_id')->references('id')->on('marcas');
             /*$table->foreign('user_id')->references('id')->on('marcas');*/
         });

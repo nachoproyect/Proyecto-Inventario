@@ -43,22 +43,7 @@
                           <th>Categoria</th>
                           <td><center>{{ $articulo->categoria->nombre }}</center></td>
                         </tr>
-                        <tr>
-                          <th>Sector</th>
-                          <td><center>{{ $articulo->sector->nombre }}</center></td>
-                        </tr>
-                        <tr>
-                          <th>Sede</th>
-                          <td><center>{{ $articulo->sede->nombre }}</center> </td>
-                        </tr>
-                        <tr>
-                          <th>Puesto</th>
-                          <td><center>{{ $articulo->puesto }}</center></td>
-                        </tr>
-                        <tr>
-                          <th>IP</th>
-                          <td><center>{{ $articulo->ip }}</center></td>
-                        </tr>
+                        
                         <tr>
                           <th>Marca</th>
                           <td><center>{{ $articulo->marca->nombre }}</center></td>
@@ -75,6 +60,11 @@
                           <th>Descripcion</th>
                           <td><center>{{ $articulo->descripcion }}</center></td>
                         </tr>
+                        <tr>
+                          <th>Estado</th>
+                          <td><center>{{ $articulo->estado }}</center></td>
+                        </tr>
+
                         <tr>
                           <th>Creado Por</th>
                           <td><center>{{ $articulo->created_by }}</center></td>

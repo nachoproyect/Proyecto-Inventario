@@ -28,6 +28,8 @@ class RoleSeeder extends Seeder
        Permission::create (['name' => 'articulo.destroy'])->syncRoles([$role1]);
        Permission::create(['name' => 'articulo.show'])->syncRoles([$role1, $role2, $role3]);
 
+       
+
        Permission::create (['name' => 'categoria.index'])->syncRoles([$role1,$role2,$role3]);
        Permission::create (['name' => 'categoria.create'])->syncRoles([$role1,$role2]);
        Permission::create (['name' => 'categoria.edit'])->syncRoles([$role1,$role2]);
