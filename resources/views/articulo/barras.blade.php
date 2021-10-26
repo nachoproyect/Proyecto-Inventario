@@ -4,6 +4,8 @@
 
 @section('content_header')
     <h1>CODIGO DE BARRAS </h1>
+    <a href="{{ route('articulos.index') }}" class="btn btn-sm btn-success mr-3"> Volver </a>
+
 @stop
 
 @section('content')

@@ -15,17 +15,17 @@
         <tr>
             <th scope="col">ID</th>
             
-            <th scope="col">Categoria</th>
+          <!--  <th scope="col">Categoria</th>
             
-            <th scope="col">Marca/Modelo</th>
+            <th scope="col">Marca/Modelo</th> -->
             <th scope="col">Serial</th>
             <th scope="col">Estante</th>
             <th scope="col">Descripcion</th>
             <th scope="col">Estado</th>
-            <th scope="col">Fec/Creacion</th>
-            <th scope="col">Fec/Actualizacion</th>
+          <!--  <th scope="col">Fec/Creacion</th>
+            <th scope="col">Fec/Actualizacion</th> -->
             <th scope="col">Codigo de Barras</th>
-            <th scope="col">Acciones</th>
+          <!--  <th scope="col">Acciones</th> -->
 
         </tr>
         
@@ -36,15 +36,15 @@
 
             <td>{{$articulo->id}}</td>
            
-            <td>{{$articulo->categoria->nombre}}</td>
+          <!--  <td>{{$articulo->categoria->nombre}}</td>
             
-            <td>{{$articulo->marca->nombre}}</td>
+            <td>{{$articulo->marca->nombre}}</td> -->
             <td>{{$articulo->serial}}</td>
             <td>{{$articulo->estante}}</td>
             <td>{{$articulo->descripcion}}</td> 
             <td>{{$articulo->estado}}</td> 
-            <td>{{$articulo->created_at}}</td>
-            <td>{{$articulo->updated_at}}</td>
+          <!--  <td>{{$articulo->created_at}}</td>
+            <td>{{$articulo->updated_at}}</td> -->
             <td><center>{{$articulo->categoria->nombre}}  {{$articulo->marca->nombre}}<br>{{$articulo->descripcion}} <br>
 
                       {!! DNS1D::getBarcodeSVG($articulo->codigo,'C128C') !!}
@@ -70,7 +70,7 @@
 
 </table>
 </form>
-
+<a href="{{ route('articulos.index') }}" class="btn btn-sm btn-success mr-3"> Volver </a>
 @stop
 
 @section('css')
