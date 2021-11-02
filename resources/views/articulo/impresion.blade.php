@@ -9,7 +9,6 @@
 @section('content')
 
 <form action="{{ route('articulo.imprimirBarra')}}" method="GET" id="form1">
-    
 <table id="articulos" class="table table-striped mt-4">
     <thead>
         <tr>
@@ -54,6 +53,8 @@
 
 
                     </label>
+                     
+                      
 
                      </div>
                      </center>

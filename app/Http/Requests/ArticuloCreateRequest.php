@@ -31,8 +31,8 @@ class ArticuloCreateRequest extends FormRequest
             'categoria_id'=>'required:articulos',
             'marca_id'=>'required:articulos',
             'faja'=>'nullable:articulos|unique:articulos,faja',
-            'precinto'=>'nullable:articulos|unique:articulos,precinto'
-
+            'precinto'=>'nullable:articulos|unique:articulos,precinto',
+            'estado'=>'required:articulos'
         ];
     }
 }

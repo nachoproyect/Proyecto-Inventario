@@ -25,6 +25,7 @@ class ArticuloEditRequest extends FormRequest
     {
         $articulo = $this->route('articulo');
         return [
+            
             'faja'=>'unique:articulos,faja,'.$this->articulo,
             'precinto'=>'unique:articulos,precinto,'.$this->articulo,
         ];
