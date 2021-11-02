@@ -77,7 +77,26 @@
 
     <div class="mb-3">
         <label for="" class="form-label">Estado</label>
-        <input id="estado" name="estado" type="text" class="form-control" tabindex="8" value="{{$articulo->estado}}">
+        <select id="estado" name="estado" value="{{old('estado') ?? $articulo->estado}}" type="text" class="form-control" tabindex="8" >
+
+        
+
+        <option value="" selected="disabled">-- Seleccione un Estado --</option>
+        
+        <option value="{{$articulo->estado}}" @if ($articulo->estado === $articulo->estado) selected @endif>{{$articulo->estado}}</option>
+       
+        
+        <option value="Asignado" > Asignado </option>
+        <option value="Deposito" > Deposito </option>
+        <option value="Anulado" > Anulado </option>
+        <option value="Transferencia" > Transferencia </option>
+        <option value="Mantenimiento" > Mantenimiento </option>
+        <option value="Baja" > Baja </option>
+
+        
+        </select>
+       
+
     </div>
 
     <a href="/articulos" class="btn btn-secondary" tabindex="9">Cancelar</a>

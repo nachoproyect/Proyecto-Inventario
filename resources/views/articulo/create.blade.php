@@ -94,7 +94,27 @@
 
 <div class="mb-3">
         <label for="" class="form-label">Estado</label>
-        <input id="estado" name="estado" type="text" class="form-control" tabindex="8">
+        
+        <select id="estado" name="estado" type="text" class="form-control" tabindex="8">
+
+        <option value="" selected="disabled">-- Seleccione un Estado --</option>
+        
+        <option value="Asignado" > Asignado </option>
+        <option value="Deposito" > Deposito </option>
+        <option value="Anulado" > Anulado </option>
+        <option value="Transferencia" > Transferencia </option>
+        <option value="Mantenimiento" > Mantenimiento </option>
+        <option value="Baja" > Baja </option>
+        </select>
+
+         @error('estado')
+        <div class="alert alert-danger">
+        
+        <small>*{{$message}}</small>
+        
+        </div>
+        @enderror
+       
     </div>
     
 
