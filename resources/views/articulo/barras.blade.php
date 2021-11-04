@@ -4,25 +4,27 @@
 
 @section('content_header')
     <h1>CODIGO DE BARRAS </h1>
+    <a href="{{ route('articulos.index') }}" class="btn btn-sm btn-success mr-3"> Volver </a>
+
 @stop
 
 @section('content')
-<div class="wrapper" style="display: grid; grid-template-columns: auto auto auto; padding: 10px;">
+<div class="wrapper" style="display: grid; grid-template-columns: auto auto auto; padding: 20px;">
 @foreach ($articulos as $articulo)
 <?php
     $articuloObj = json_decode($articulo, true);
     //dd($articuloObj);
    // die();
 ?>
-
-             
-            <div class="container-item" style="border: black 2px solid;  padding: 2px;   border: 1px solid rgba(0, 0, 0, 0.8); padding: 20px; font-size: 30px; width: 300px; height: 160px; text-align: center;">
+        <div class="container-item" style="border: black 2px solid;  padding: 2px;   border: 1px solid rgba(0, 0, 0, 0.8); padding: 20px; font-size: 30px; width: 300px; height: 140px; text-align: center;">
                 <img src="{{ asset('/img/etiqueta.png') }}" alt="image" height="30px" class="avatar">
             <h6>{!! $articuloObj["categoria"]["nombre"] !!}
             {!! $articuloObj["marca"]["nombre"] !!}<br>
             {!! $articuloObj["descripcion"] !!}<br>
-            {!! DNS1D::getBarcodeSVG($articuloObj["codigo"],'C128C') !!}</h6>
+            {!! DNS1D::getBarcodeSVG($articuloObj["codigo"],'CODABAR') !!}</h6>
             </div>
+             
+          
         
         @endforeach
         

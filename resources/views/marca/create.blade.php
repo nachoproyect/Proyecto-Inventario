@@ -27,6 +27,15 @@
     <div class="mb-3">
         <label for="" class="form-label">Condicion</label>
         <input id="condicion" name="condicion" type="boolean" class="form-control" tabindex="3">
+           
+        @error('condicion')
+        <div class="alert alert-danger">
+        
+        <small>*{{$message}}</small>
+        
+        </div>
+        @enderror 
+
     </div>
     
     <a href="marcas" class="btn btn-secondary" tabindex="4">Cancelar</a>

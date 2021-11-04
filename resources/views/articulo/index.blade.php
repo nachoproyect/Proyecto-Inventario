@@ -10,7 +10,7 @@
 @can('articulo.create')
 <a href="articulos/create" class="btn btn-primary mb-3">CREAR</a>
 @endcan
-<form action="{{route('articulo.imprimirBarra')}}"method="GET" id="form1"> 
+<!--<form action="{{route('articulo.imprimirBarra')}}"method="GET" id="form1"> -->
 
 <table id="articulos" class="table table-striped mt-4">
     <thead>
@@ -28,7 +28,7 @@
             <th scope="col">Estado</th>
             <th scope="col">Fec/Creacion</th>
             <th scope="col">Fec/Actualizacion</th>
-            <th scope="col">Codigo de Barras</th>
+          <!--  <th scope="col">Codigo de Barras</th> -->
             <th scope="col">Acciones</th>
 
         </tr>
@@ -51,7 +51,8 @@
             <td>{{$articulo->estado}}</td>
             <td>{{$articulo->created_at}}</td>
             <td>{{$articulo->updated_at}}</td>
-            <td><center>{{$articulo->categoria->nombre}}  {{$articulo->marca->nombre}}<br>{{$articulo->descripcion}} <br>
+
+        <!--    <td><center>{{$articulo->categoria->nombre}}  {{$articulo->marca->nombre}}<br>{{$articulo->descripcion}} <br>
 
                       {!! DNS1D::getBarcodeSVG($articulo->codigo,'C128C') !!}
                      <div class="checkbox">
@@ -63,34 +64,36 @@
 
                      </div>
                      </center>
-            </td>
+            </td> -->
 
             
                 
 
             <td>
-                <form action="{{route ('articulos.destroy', $articulo->id)}}" class="formulario-eliminar" method="POST">
-                 @can('articulo.show')
+               @can('articulo.show')
                    <a href="{{route('articulos.show', $articulo->id)}}" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
-                   @endcan
+                   @endcan 
                    @can('articulo.edit')
                    <a href="/articulos/{{$articulo->id}}/edit" class="btn btn-primary" ><i class="far fa-edit"></i></a>
                    @endcan
-                   @csrf
-                   @method('DELETE')
+
+                <form action="{{route ('articulos.destroy', $articulo->id)}}" class="formulario-eliminar" method="POST"> 
+                 
+                   @csrf 
+                  @method('DELETE') 
                    @can('articulo.destroy')
+                  <!-- <a href="/articulos/{{$articulo->id}}/destroy" class="btn btn-danger"><i class="far fa-trash-alt"></i></a> -->
                    <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
                    @endcan
 
 
-                </form>
-            </td>
+                </form> 
+            </td> 
         </tr>
         @endforeach
-
-        <input  type="submit" form="form1" value="Imprimir Seleccion" class="btn btn-success mb-3">
-
-         </form>
+     <a href="{{route('articulo.impresion')}}" class="btn btn-success mb-3" > Seleccionar Etiquetas</a>
+      
+        <!-- </form> -->
 
     </tbody>
 
